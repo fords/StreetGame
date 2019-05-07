@@ -10,7 +10,23 @@ var Enemy = function(x,y) {
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    this.x += 150 * dt;
+    
+    if(this.x > ctx.canvas.width + this.width){
+        this.x = -200 * Math.floor(Math.random() * 4) + 1
+    } else {
+        this.x += 150 * dt
+    }
+
+    let xDist = player.x - this.x 
+    let yDist = player.y - this.y 
+    let distance = Math.sqrt( xDist * xDist + yDist * yDist)
+    // Check if there is collision 
+    if ( distance < 65) {
+        if (player) {
+            player.x = 202
+            player.y = 400
+        }
+    } 
 };
 
 // Draw the enemy on the screen, required method for game
@@ -31,7 +47,7 @@ var Player = function(x, y, sprite){
 
 
 //handleInput()  update(), render() method.
-
+// handleInput() checks the keypad instruction for the player's direction movement 
 Player.prototype.handleInput = function(direction){
     if ( direction === 'up' && this.y - 10 > 0){
         this.y -= 85
@@ -44,12 +60,19 @@ Player.prototype.handleInput = function(direction){
     }
 }
 
+// Render player
 Player.prototype.render = function(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y)
 }
 
+// Check player wins the game
 Player.prototype.update = function(dt){
-
+    
+    if ( !isGameOver && player.y < 50 ){
+        isGameOver = true
+        console.log('player won the game!')
+        allEnemies = []
+    }
 }
 
 // Eventlistener listens for key presses and sends the keys to Player.handleInput() method.
@@ -63,11 +86,14 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode])
 });
-
+// isGameOver
+var isGameOver = false
+// enemyPosition in Y axis
 const enemyPosition = [55, 140 ,230]
-
+// Player start position
 const player = new Player(202, 400 ,'images/char-boy.png' )
 
-const allEnemies = enemyPosition.map((y, index) => {
+// All enemies position calculation
+var allEnemies = enemyPosition.map((y, index) => {
     return new Enemy( (-200 * (index + 1)), y)
 })
