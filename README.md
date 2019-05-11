@@ -21,6 +21,6 @@ Download this file and run index.html to start playing.
     <li> Add score </li>
     <li> Game difficulty </li>
     <li> Responsive web design </li>
-    <li> User has option to choose the image <li>
+    <li> User has option to choose the image </li>
     <li> User can attack the enemy </li>
 </ul>
