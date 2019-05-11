@@ -12,7 +12,8 @@ The game allows user to move left, right, up or down. The player should try to a
 </ul>
 
 ## How To Start The Game 
-Download this file and run index.html to start playing.
+Play at https://fords.github.io/StreetGame/ or </br>
+download this repo and run index.html to start playing.
 
 ## Future Work
 <ul>
